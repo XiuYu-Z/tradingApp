@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+
+<div class="container" layout:fragment="main-body">
+    <div class="row" style="margin-top: 40px">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h2 id="tables">Register for a New Account</h2>
+            </div>
+            <div layout:fragment="content" class="container mySpace">
+                <form th:action="@{/register}" th:object="${registerForm}" method="POST">
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="email">Email address</label>
+                            <input th:field="*{email}" type="email" class="form-control" id="email"
+                                   aria-describedby="emailHelp" placeholder="myname@mydomain.com">
+                            <div style="margin-top: 20px;" th:errors="*{email}"
+                                 class="error alert alert-dismissible alert-danger">
+                            </div>
+                            <div style="margin-top: 20px;" th:if="${emailDuplicate}"
+                                 class="error alert alert-dismissible alert-danger">
+                                This email address is taken.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input th:field="*{password}" type="password" class="form-control"
+                                   id="password" placeholder="Password">
+                            <div style="margin-top: 20px;" th:errors="*{password}"
+                                 class="error alert alert-dismissible alert-danger">
+                            </div>
+                            <span></span>
+                        </div>
+                        <div>
+                            <label for="homeCity" th:field="${homeCity}">Choose your home city:</label>
+                            <select name="homeCity" id="homeCity" class="custom-select">
+                                <optgroup label="Ontario">
+                                    <option value="Toronto">Toronto</option>
+                                    <option value="Ottawa">Ottawa</option>
+                                </optgroup>
+                                <optgroup label="Quebec">
+                                    <option value="Quebec city">Quebec city</option>
+                                    <option value="Montreal">Montreal</option>
+                                </optgroup>
+                                <optgroup label="British Columbia">
+                                    <option value="Vancouver">Vancouver</option>
+                                </optgroup>
+                                <optgroup label="Manitoba">
+                                    <option value="Winnipeg">Winnipeg</option>
+                                </optgroup>
+                            </select>
+                            <small class="form-text text-muted">Note: You can only trade with people from the same city
+                                as
+                                you.</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="margin-top:40px">Submit</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

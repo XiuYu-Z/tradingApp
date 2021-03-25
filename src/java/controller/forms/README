@@ -1,0 +1,9 @@
+- This directory contains the "command objects" for all the HTML forms that need to be submitted via a POST request, and handled by Spring.
+- A "command object" is what the Thymeleaf templating engine calls a class that holds the data for an HTML form.
+
+- The Thymeleaf templating engine requires the use of a "Command Object" (essentially a data class) to store all the input fields.
+- Please note that we are aware of this code smell (https://sourcemaking.com/refactoring/smells/data-class),
+  but unfortunately, this is how the Thymeleaf templating engine is designed.
+
+- For more details, see Section 6 in the docs:
+  https://www.thymeleaf.org/doc/tutorials/3.0/thymeleafspring.html#creating-a-form

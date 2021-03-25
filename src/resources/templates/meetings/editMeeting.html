@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<div class="container" layout:fragment="main-body">
+    <div class="page-header">
+        <h2 id="tables">Edit Meeting</h2>
+    </div>
+    <div style="margin-top: 20px;" th:if="${dateFromPast}" class="error alert alert-dismissible alert-danger">
+        You have entered a date from the past. Please choose a meeting date in the future.
+    </div>
+    <div class="form-group">
+        <form th:action="@{/meetings/edit}" th:object="${meetingEditForm}" method="POST">
+            <input type="hidden" class="form-control" id="meetingId" name="meetingId" th:value="${meeting.getKey()}">
+            <label class="col-form-label" for="meetingLocation">Meeting Location</label>
+            <input type="text" class="form-control" id="meetingLocation" name="meetingLocation"
+                   th:value="${meeting.getLocation()}">
+            <div style="margin-top: 20px;" th:errors="*{meetingLocation}"
+                 class="error alert alert-dismissible alert-danger"></div>
+            <label class="col-form-label" for="meetingDate">Enter Date</label>
+            <input type="date" class="form-control" id="meetingDate" name="meetingDate" th:value="${meeting.getTime()}">
+            <div style="margin-top: 20px;" th:errors="*{meetingDate}"
+                 class="error alert alert-dismissible alert-danger"></div>
+            <button style="margin-top: 40px" type="submit" class="btn btn-primary">Edit</button>
+        </form>
+    </div>
+    <script type="text/javascript" th:inline="javascript">
+        flatpickr("#meetingDate", {});
+    </script>
+</div>
+
+
+</html>

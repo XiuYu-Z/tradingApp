@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+
+<div class="container" layout:fragment="main-body">
+    <div class="row" style="margin-top: 40px">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h2 id="tables">My Items</h2>
+            </div>
+
+            <div class="bs-component">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Item id</th>
+                        <th scope="col">Item Name</th>
+                        <th scope="col">Item Description</th>
+                        <th scope="col">Tags</th>
+                        <th scope="col">Is this item for sale?</th>
+                        <th scope="col">Price/Value</th>
+                        <th scope="col">Current Holder</th>
+                        <th scope="col">Item Approval Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="table-secondary" th:each="item: ${myItems}">
+                        <td th:text="${item.getKey()}"></td>
+                        <td th:text="${item.getName()}"></td>
+                        <td th:text="${item.getDescription()}"></td>
+                        <td>
+                            <span th:each="tag, iter: ${itemTagMap.get(item.getKey())}">
+                                <span th:if="!${iter.last}" th:text="${tag.getTagName()} + ','"></span>
+                                <span th:if="${iter.last}" th:text="${tag.getTagName()}"></span>
+                            </span>
+                        </td>
+                        <td>
+                            <span th:if="${item.isForSale()}">Yes</span>
+                            <span th:if="${!item.isForSale()}">No</span>
+                        </td>
+                        <td th:text="${item.getPrice()}"></td>
+                        <td th:text="${item.getHolderId()}"></td>
+                        <td>
+                            <span th:if="${item.isVisible()}">Approved</span>
+                            <span th:if="${!item.isVisible()}">Waiting for Approval</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <a href="/items/add" class="btn btn-primary btn-info btn-lg btn-block">Click here to add an item!</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

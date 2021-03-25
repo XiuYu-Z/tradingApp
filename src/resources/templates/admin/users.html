@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<div class="container" layout:fragment="main-body">
+    <div class="row" style="margin-top: 40px">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h2 id="tables">Users</h2>
+                <div th:if="${promoteSuccess == true}" class="alert alert-dismissible alert-warning">
+                    User was successfully made an administrator!
+                </div>
+            </div>
+            <div class="bs-component">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Username</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Promote</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user: ${users}">
+                        <td th:text="${user.getName()}" style="vertical-align:middle"></td>
+                        <td th:text="${user.getStatus()}" style="vertical-align:middle"></td>
+                        <td style="vertical-align:middle" th:if="${user.isAdmin() == false}">
+                            <form th:action="@{/admin/promote}" th:object="${promoteForm}" method="POST">
+                                <input type="hidden" class="form-control" name="userId" th:value="${user.getKey()}">
+                                <button type="submit" class="btn btn-primary">Make Admin</button>
+                            </form>
+                        </td>
+                        <td style="vertical-align:middle" th:if="${user.getStatus() == true}">
+                            This user is already an administrator.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</html>

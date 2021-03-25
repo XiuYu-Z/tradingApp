@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<div class="container" layout:fragment="main-body">
+    <div class="row" style="margin-top: 40px">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h2 id="tables">Transactions Involving You</h2>
+                <div class="alert alert-dismissible alert-warning" th:if="${newTradeSuccess == true}">
+                    Your trade has been successfully initiated!
+                </div>
+                <div class="alert alert-dismissible alert-warning" th:if="${cancelTransactionSuccess == true}">
+                    The transaction was cancelled.
+                </div>
+                <div class="alert alert-dismissible alert-warning" th:if="${cancelTransactionSuccess == false}">
+                    You cannot cancel a transaction where a meeting has been agreed to!
+                </div>
+                <div th:if="${transactions.size() == 0}" class="alert alert-dismissible alert-warning">
+                    You are not involved in any transactions yet. Please go to view available items and choose an item
+                    to trade.
+                </div>
+            </div>
+            <div class="bs-component">
+                <div th:each="transaction: ${transactions}" class="card text-white bg-primary mb-3">
+                    <div class="card-header">Transaction Id: <span th:text="${transaction.getKey()}"></span></div>
+                    <div class="card-body">
+                        <h4 class="card-title">Trade Information:</h4>
+                        <div class="card-text">
+                            <div th:if="${trades.get(transaction.getKey()).get(0).getSell() == true}">Purchase</div>
+                            <div th:if="${trades.get(transaction.getKey()).get(0).getSell() == false}">
+                                <div th:if="${trades.get(transaction.getKey()).size() == 1}">One-way trade</div>
+                                <div th:if="${trades.get(transaction.getKey()).size() == 2}">Two-way trade</div>
+                                <div th:if="${meetings.get(transaction.getKey()).size() == 1}">Permanent trade</div>
+                                <div th:if="${meetings.get(transaction.getKey()).size() == 2}">Temporary trade</div>
+                            </div>
+                        </div>
+                        <hr>
+                        <h4 class="card-title">Items Involved:</h4>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-6" th:each="trade: ${trades.get(transaction.getKey())}">
+                                    <div th:each="item: ${items.get(trade.getKey())}">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                Item Id:
+                                            </div>
+                                            <div class="col-7">
+                                                <span th:text="${item.getKey()}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-5">
+                                                Item Name:
+                                            </div>
+                                            <div class="col-7">
+                                                <span th:text="${item.getName()}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-5">
+                                                Item Description:
+                                            </div>
+                                            <div class="col-7">
+                                                <span th:text="${item.getDescription()}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-5">
+                                                Item Price:
+                                            </div>
+                                            <div class="col-7">
+                                                <span th:text="${item.getPrice()}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <span th:if="${trades.get(transaction.getKey()).get(0).getSell() == true}">Buyer:</span><span
+                                                    th:if="${trades.get(transaction.getKey()).get(0).getSell() == false}">Borrower:</span>
+                                            </div>
+                                            <div class="col-7">
+                                                <span th:text="${borrowers.get(trade.getKey()).getName()}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <span th:if="${trades.get(transaction.getKey()).get(0).getSell() == true}">Seller:</span><span
+                                                    th:if="${trades.get(transaction.getKey()).get(0).getSell() == false}">Lender:</span>
+                                            </div>
+                                            <div class="col-7">
+                                                <span th:text="${lenders.get(trade.getKey()).getName()}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <h4 class="card-title">Meeting Information:</h4>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-6" th:each="meeting: ${meetings.get(transaction.getKey())}">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            Meeting Id:
+                                        </div>
+                                        <div class="col-7">
+                                            <span th:text="${meeting.getKey()}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-5">
+                                            Meeting Date:
+                                        </div>
+                                        <div class="col-7">
+                                            <span th:text="${meeting.getTime()}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-5">
+                                            Meeting Location:
+                                        </div>
+                                        <div class="col-7">
+                                            <span th:text="${meeting.getLocation()}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-5">
+                                            Meeting Agreed :
+                                        </div>
+                                        <div class="col-7">
+                                            <span th:text="${meeting.isAgreedTo()}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-5">
+                                            Meeting Complete:
+                                        </div>
+                                        <div class="col-7">
+                                            <span th:text="${meeting.isComplete()}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-5">
+                                            Last Editor:
+                                        </div>
+                                        <div class="col-7">
+                                            <span th:text="${users.get(meeting.getLastEditor()).getName()}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            <form th:action="@{/trade/cancel}" th:object="${cancelTransactionForm}" method="POST">
+                                <input type="hidden" name="transactionId" th:value="${transaction.getKey()}">
+                                <button type="submit" class="btn btn-danger">Cancel Transaction</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</html>

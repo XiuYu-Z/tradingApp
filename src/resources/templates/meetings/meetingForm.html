@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<div class="container" layout:fragment="main-body">
+    <div class="page-header">
+        <h2 id="tables">Setup Your Meeting</h2>
+        <div class="alert alert-dismissible alert-success">
+            Suggest a meeting location and time. <br>
+            When the other party sees this, they will approve, or suggest a different meeting time or location.<br>
+            Go to "My Meetings" in the navigation pane to keep track of these meetings.
+        </div>
+        <div style="margin-top: 20px;" th:if="${dateFromPast}" class="error alert alert-dismissible alert-danger">
+            You have entered a date from the past. Please choose a meeting date in the future.
+        </div>
+    </div>
+
+    <form th:action="@{/trade/initiate}" th:object="${initiateTradeForm}" method="POST" style="margin-bottom: 40px">
+        <div class="card border-primary mb-3">
+            <div class="card-header">Meeting Details</div>
+            <div class="card-body">
+                <div class="form-group">
+                    <input type="hidden" class="form-control" th:name="borrowItemId" th:id="borrowItemId"
+                           th:value="${borrowItemId}">
+                    <input type="hidden" class="form-control" th:name="lendItemId" th:id="lendItemId"
+                           th:value="${lendItemId}">
+                    <input type="hidden" class="form-control" th:name="tradeType" th:id="tradeType"
+                           th:value="${tradeType}">
+                    <input type="hidden" class="form-control" th:name="tradeDuration" th:id="tradeDuration"
+                           th:value="${tradeDuration}">
+                    <div class="form-group">
+                        <label class="col-form-label" for="meetingLocation">Meeting Location</label>
+                        <input th:field="*{meetingLocation}" type="text" class="form-control"
+                               placeholder="University of Toronto, Bahen Centre for Information Technology"
+                               id="meetingLocation">
+                        <div style="margin-top: 20px;" th:errors="*{meetingLocation}"
+                             class="error alert alert-dismissible alert-danger"></div>
+                        <label class="col-form-label" for="meetingDate">Enter Date</label>
+                        <input th:field="*{meetingDate}" type="text" class="form-control"
+                               placeholder="December 12, 2020"
+                               id="meetingDate">
+                        <div style="margin-top: 20px;" th:errors="*{meetingDate}"
+                             class="error alert alert-dismissible alert-danger"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card border-primary mb-3" th:if="${tradeDuration == 'temporary'}">
+            <div class="card-header">Second Meeting Details</div>
+            <div class="card-body">
+                <div class="form-group" th:if="${tradeDuration == 'temporary'}">
+                    <label class="col-form-label" for="meetingLocation">Meeting Location</label>
+                    <input th:field="*{meetingLocation2}" type="text" class="form-control"
+                           placeholder="University of Toronto, Bahen Centre for Information Technology"
+                           id="meetingLocation2">
+                    <div style="margin-top: 20px;" th:if="${secondMeetingInfoMissing}"
+                         class="error alert alert-dismissible alert-danger">
+                        Please enter a meeting location before proceeding.
+                    </div>
+                    <p style="margin-top:20px">Note: Your meeting will take place one month after your chosen date for
+                        the first meeting.</p>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top:40px">Initiate Trade</button>
+    </form>
+
+    <script th:inline="javascript">
+        flatpickr("#meetingDate", {});
+    </script>
+</div>
+
+</html>

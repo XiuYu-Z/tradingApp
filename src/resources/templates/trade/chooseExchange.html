@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<div class="container" layout:fragment="main-body">
+    <div class="row" style="margin-top: 40px; margin-bottom:40px;">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h2 th:if="${tradeDuration == 'sell'}">Buy this Item with Cash</h2>
+                <h2 th:if="${tradeDuration != 'sell'}">Choose an Item to Trade Away To the Other Party</h2>
+                <div class="alert alert-dismissible alert-success">
+                    You are currently starting a <span th:if="${tradeDuration == 'sell'}">purchasing</span> <span
+                        th:if="${tradeDuration == 'permanent'}">permanent</span> <span
+                        th:if="${tradeDuration == 'temporary'}">temporary</span> transaction to trade <span
+                        th:text="${borrowItem.getName()}"></span>: <span
+                        th:text="${borrowItem.getDescription()}"></span>
+                    <span th:if="${tradeDuration == 'sell'}"><br> The cash transaction for this item will take place in your in-person meeting with the other party.<br> No online cash transaction is required. <br> Setup a meeting to get started.</span>
+                </div>
+                <div th:if="${tradeDuration != 'sell'}" class="alert alert-dismissible alert-success">
+                    Choose an item to give them in a two-way trade, or click "I would not rather lend any of my items",
+                    to start an one-way trade. Note that if you have borrowed more items than lent, you cannot choose to make an one-way trade.
+                </div>
+            </div>
+            <div class="bs-component">
+                <div th:if="${tradeDuration != 'sell'}">
+                    <div class="card border-primary mb-3">
+                        <div class="card-header">Recommended Items To Exchange</div>
+                        <div class="card-body">
+                            <p>Here you see a list of recommended items that you own that the other party has on their
+                                wishlist.<br>
+                                If you choose items on this list, the transaction will have a higher chance of being
+                                approved by the other user since they have already expressed interest in these items.
+                            </p>
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Item Name</th>
+                                    <th scope="col">Item Description</th>
+                                    <th scope="col">Exchange</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="item: ${recommendedItems}">
+                                    <td th:text="${item.getName()}"></td>
+                                    <td th:text="${item.getDescription()}"></td>
+                                    <td>
+                                        <a th:if="${tradeDuration == 'temporary'}"
+                                           th:href="@{'/trade/meeting?tradeDuration=temporary&tradeType=twoWay&borrowItemId='+${borrowItem.getKey()}+'&lendItemId=' + ${item.getKey()}}"
+                                           class="btn btn-success">Exchange this item</a>
+                                        <a th:if="${tradeDuration == 'permanent'}"
+                                           th:href="@{'/trade/meeting?tradeDuration=permanent&tradeType=twoWay&borrowItemId='+${borrowItem.getKey()}+'&lendItemId=' + ${item.getKey()}}"
+                                           class="btn btn-success">Exchange this item</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${tradeDuration != 'sell'}">
+                    <div class="card border-primary mb-3">
+                        <div class="card-header">Here are your other tradable items</div>
+                        <div class="card-body">
+                            <p>These are items that you own that are not on the other party's wishlist</p>
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Item Name</th>
+                                    <th scope="col">Item Description</th>
+                                    <th scope="col">Exchange</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="item: ${otherItems}">
+                                    <td th:text="${item.getName()}"></td>
+                                    <td th:text="${item.getDescription()}"></td>
+                                    <td>
+                                        <a th:if="${tradeDuration == 'temporary'}"
+                                           th:href="@{'/trade/meeting?tradeDuration=temporary&tradeType=twoWay&borrowItemId='+${borrowItem.getKey()}+'&lendItemId=' + ${item.getKey()}}"
+                                           class="btn btn-success">Exchange this item</a>
+                                        <a th:if="${tradeDuration == 'permanent'}"
+                                           th:href="@{'/trade/meeting?tradeDuration=permanent&tradeType=twoWay&borrowItemId='+${borrowItem.getKey()}+'&lendItemId=' + ${item.getKey()}}"
+                                           class="btn btn-success">Exchange this item</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${!canBorrow}">
+                    You cannot make an one-way trade since you have borrowed more items than lent.
+                </div>
+                <div th:if="${tradeDuration == 'temporary' && canBorrow}">
+                    <a th:href="@{'/trade/meeting?tradeDuration=temporary&tradeType=oneWay&borrowItemId=' + ${borrowItem.getKey()}}"
+                       class="btn btn-primary btn-info btn-lg btn-block">I would rather not lend any of my items.</a>
+                    <small>Note that clicking here this starts a one-way transaction.</small>
+                </div>
+                <div th:if="${tradeDuration == 'permanent' && canBorrow}">
+                    <a th:if="${tradeDuration == 'permanent'}"
+                       th:href="@{'/trade/meeting?tradeDuration=permanent&tradeType=oneWay&borrowItemId=' + ${borrowItem.getKey()}}"
+                       class="btn btn-primary btn-info btn-lg btn-block">I would rather not lend any of my items.</a>
+                    <small>Note that clicking here this starts a one-way transaction.</small>
+                </div>
+                <a th:if="${tradeDuration == 'sell' && canBorrow}"
+                   th:href="@{'/trade/meeting?tradeDuration=permanent&tradeType=sell&borrowItemId=' + ${borrowItem.getKey()}}"
+                   class="btn btn-primary btn-info btn-lg btn-block">Setup a In-Person Meeting to Complete the
+                    Transaction</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</html>

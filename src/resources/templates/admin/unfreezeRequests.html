@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<div class="container" layout:fragment="main-body">
+    <div class="row" style="margin-top: 40px">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h2 id="tables">Unfreeze Suggestions</h2>
+                <div class="alert alert-dismissible alert-success">
+                    The following is a list of users that requested the administrator to be unfrozen.
+                </div>
+            </div>
+            <div class="bs-component">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Username</th>
+                        <th scope="col">Unfreeze User</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user: ${unfreezeRequests}">
+                        <td th:text="${user.getName()}" style="vertical-align:middle"></td>
+                        <td style="vertical-align:middle">
+                            <form th:action="@{/admin/unfreeze/handle}" th:object="${unfreezeUserForm}" method="POST">
+                                <input type="hidden" class="form-control" name="userId" th:value="${user.getKey()}">
+                                <button type="submit" class="btn btn-primary">Unfreeze</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</html>

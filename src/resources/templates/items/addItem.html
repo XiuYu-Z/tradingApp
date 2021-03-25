@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<div class="container" layout:fragment="main-body">
+    <div class="page-header">
+        <h2 id="tables">Add an Item to Your Inventory</h2>
+    </div>
+    <div class="alert alert-dismissible alert-warning" th:if="${addSuccess == true}">
+        Your item has been added. It still needs approval from an administrator before it is visible to other users.
+    </div>
+    <div class="form-group">
+        <form th:action="@{/items/add}" th:object="${itemAddForm}" method="POST">
+            <div class="form-group">
+                <label class="col-form-label" for="itemName">Item Name</label>
+                <input th:field="*{itemName}" type="text" class="form-control" placeholder="iPhone XS" id="itemName">
+                <div style="margin-top: 20px;" th:errors="*{itemName}"
+                     class="error alert alert-dismissible alert-danger"></div>
+            </div>
+            <div class="form-group">
+                <label class="col-form-label" for="itemDescription">Item Description</label>
+                <input th:field="*{itemDescription}" type="text" class="form-control"
+                       placeholder="This is an old iPhone"
+                       id="itemDescription">
+                <div style="margin-top: 20px;" th:errors="*{itemDescription}"
+                     class="error alert alert-dismissible alert-danger"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-form-label" for="price">Price/Value</label>
+                <small style="margin-bottom:20px" class="form-text text-muted">
+                    Even if you don't intend to sell this item, please enter an estimated value.<br>
+                    The administrators will use this information for platform analytics.<br>
+                    Note that if you enter wildly unrealistic values, you may be banned from this platform.
+                </small>
+                <input th:field="*{price}" type="number" class="form-control" placeholder="Price of the item"
+                       id="price">
+                <div style="margin-top: 20px;" th:errors="*{price}"
+                     class="error alert alert-dismissible alert-danger"></div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-form-label" for="forSale">Click this box if you want to sell this item</label>
+                <input th:field="*{forSale}" type="checkbox" class="form-control" id="forSale">
+            </div>
+
+            <div class="form-group">
+                <label class="col-form-label" for="tags">Tags (separate each tag with a comma)</label>
+                <input th:field="*{tags}" type="text" class="form-control" placeholder="electronics, apple, used"
+                       id="tags">
+                <div style="margin-top: 20px;" th:errors="*{tags}"
+                     class="error alert alert-dismissible alert-danger"></div>
+            </div>
+            <div>
+                <button style="margin-top: 40px" type="submit" class="btn btn-primary">Add</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+</html>

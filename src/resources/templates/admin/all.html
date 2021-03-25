@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns="http://www.w3.org/1999/html" layout:decorate="~{layout}">
+
+<div class="container" layout:fragment="main-body">
+    <div class="row" style="margin-top: 40px">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h2 id="tables">Undoable Actions</h2>
+            </div>
+            <div class="bs-component">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Actions</th>
+                        <th scope="col">Undo</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="table-secondary" th:each="action: ${actions}">
+                        <td th:text="${action.getDisplayString()}"></td>
+                        <td th:if="${undoPermissions.get(action.getKey()) == true}">
+                            <form th:object="${undoForm}" th:action="@{/admin/undo/handle}" method="POST">
+                                <input type="hidden" name="historyId" th:value="${action.getKey()}">
+                                <button type="submit" class="btn btn-primary">Undo</button>
+                            </form>
+                        </td>
+                        <td th:if="${undoPermissions.get(action.getKey()) == false}">
+                            Can't undo
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

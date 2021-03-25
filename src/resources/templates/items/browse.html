@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<div class="container" layout:fragment="main-body">
+    <div class="row" style="margin-top: 40px">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h2 id="tables">View All Available Items</h2>
+                <div class="alert alert-dismissible alert-warning" th:if="${addSuccess == true}">
+                    The item has been successfully added to your wishlist.
+                </div>
+                <div class="alert alert-dismissible alert-success">
+                    Here you see items that are available for trading.<br>
+                    These items have been approved by the admin, and are currently held by their original owner.<br>
+                    To start a permanent transaction, in which you permanently exchange items, click the permanent
+                    button.<br>
+                    To start a temporary transaction, in which you trade an item for a set duration, click the temporary
+                    button.<br>
+                    Adding an item to wishlist will let other users know you are willing to exchange an item of yours
+                    for this item.
+                </div>
+                <div th:if="${canTrade == false}" class="alert alert-dismissible alert-success">
+                    You do not have permission to trade !
+                </div>
+                <div style="margin-bottom:40px; margin-top:40px" th:if="${allTags.size() > 0}" class="bs-component">
+                    <div class="card border-primary mb-3">
+                        <div class="card-header">Filters</div>
+                        <div class="card-body">
+                            <p class="card-text">Please choose from the available filters to narrow the items
+                                available.</p>
+                            <form th:action="@{/browse}" th:object="${tagFilterForm}" method="GET">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                <span style="margin-right:10px;" th:each="tag: ${allTags}">
+                                    <input type="checkbox" th:field="${tagFilterForm.tag}"
+                                           th:value="${tag.getTagName()}" th:text="${tag.getTagName()}">
+                                </span>
+                                    </div>
+                                </div>
+                                <div style="margin-top:20px" class="row">
+                                    <div class="col-lg-12">
+                                        <button type="submit" class="btn btn-primary">Apply Filters</button>
+                                        <a class="btn btn-primary" href="/browse">Remove All Filters</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="bs-component">
+                <table class="table table-hover" table-layout="auto">
+                    <thead>
+                    <tr>
+                        <th scope="col">Item ID</th>
+                        <th scope="col">Item Name</th>
+                        <th scope="col">Item Description</th>
+                        <th scope="col">Item Tags</th>
+                        <th scope="col">Price/Value</th>
+                        <th scope="col">Borrow/Trade Item</th>
+                        <th scope="col">Purchase Item</th>
+                        <th scope="col">Add to My Wishlist</th>
+                        <!--                        <th scope="col">Item Location (City)</th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item: ${availableItems}">
+                        <td th:text="${item.getKey()}" style="vertical-align:middle"></td>
+                        <td th:text="${item.getName()}" style="vertical-align:middle"></td>
+                        <td th:text="${item.getDescription()}" style="vertical-align:middle"></td>
+                        <td style="vertical-align:middle">
+                            <span th:each="tag, iter: ${itemTagMap.get(item.getKey())}">
+                                <span th:if="!${iter.last}" th:text="${tag.getTagName()} + ','"></span>
+                                <span th:if="${iter.last}" th:text="${tag.getTagName()}"></span>
+                            </span>
+                        </td>
+                        <td th:text="${item.getPrice()}" style="vertical-align:middle"></td>
+                        <td th:if="${loggedIn == true}">
+                            <div th:if="${canTrade == true}">
+                                <a th:href="@{'/trade?tradeDuration=permanent&borrowItemId=' + ${item.getKey()}}"
+                                   class="btn btn-success btn-sm">Permanent</a>
+                                <a th:href="@{'/trade?tradeDuration=temporary&borrowItemId=' + ${item.getKey()}}"
+                                   class="btn btn-success btn-sm">Temporary</a>
+                            </div>
+                        <td th:if="${item.isForSale() == true}">
+                            <a th:if="${canTrade == true}" th:href="@{'/trade?tradeDuration=sell&borrowItemId=' + ${item.getKey()}}"
+                               class="btn btn-success btn-sm" style="margin-right:20px">Buy</a>
+                        <td th:if="${item.isForSale() == false}">
+                            Item not for sale!
+                        </td>
+                        <td th:if="${loggedIn == false}">
+                            Please login to start a trade!
+                        </td>
+                        <td th:if="${loggedIn == true}">
+                            <div th:if="${!myWishlist.contains(item.getKey())}">
+                                <form th:action="@{/wishlist/add}" th:object="${wishlistAddForm}" method="POST">
+                                    <input type="hidden" name="itemId" th:value="${item.getKey()}">
+                                    <button class="btn btn-info btn-sm" type="submit">Add to Wishlist</button>
+                                </form>
+                            </div>
+                            <div style="vertical-align:middle" th:if="${myWishlist.contains(item.getKey())}">
+                                Already added to wishlist.
+                            </div>
+                        </td>
+                        <td style="vertical-align:middle" th:if="${loggedIn == false}">
+                            Please login to add an item to wishlist!
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <style>
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+    </style>
+</div>
+
+
+</html>

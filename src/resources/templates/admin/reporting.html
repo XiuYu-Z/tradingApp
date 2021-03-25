@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<div class="container" layout:fragment="main-body">
+    <div class="page-header">
+        <h2 id="tables">Report</h2>
+    </div>
+    <div class="alert alert-dismissible alert-success">
+        Analytic data will only show up once users have confirmed their physical exchange, after their meetings have taken place.
+    </div>
+    <div class="form-group">
+        <div class="card border-primary mb-3">
+            <div class="card-header">View Most Frequent Traded Item</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">Item Name</div>
+                    <div class="col-6">Frequency</div>
+                </div>
+                <div class="row" th:each="item, iter: ${items}">
+                    <div class="col-6" th:text="${item.getName()}"></div>
+                    <div class="col-6" th:text="${itemFrequency.get(iter.index)}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="card border-primary mb-3">
+            <div class="card-header">View User with highest credit</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">User Name</div>
+                    <div class="col-6">Credit</div>
+                </div>
+                <div class="row" th:each="user, iter: ${userCredit}">
+                    <div class="col-6" th:text="${allUsers.get(user).getName()}"></div>
+                    <div class="col-6" th:text="${credit.get(iter.index)}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

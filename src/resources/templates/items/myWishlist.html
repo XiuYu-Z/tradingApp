@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<div class="container" layout:fragment="main-body">
+    <div class="row" style="margin-top: 40px">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h2 id="tables">My Wishlist</h2>
+                <div class="alert alert-dismissible alert-success">
+                    This is a collection of all the items that you have added to your wishlist.<br>
+                    When another user's item is on your wishlist, if they decide to trade with you,
+                    they will be more likely to offer you something in exchange that you want.
+                </div>
+            </div>
+            <div class="bs-component">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Item ID</th>
+                        <th scope="col">Item Name</th>
+                        <th scope="col">Item Description</th>
+                        <th scope="col">Tags</th>
+                        <th scope="col">Is this item for sale?</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Current Holder</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="table-secondary" th:each="item: ${myWishlist}">
+                        <td th:text="${item.getKey()}"></td>
+                        <td th:text="${item.getName()}"></td>
+                        <td th:text="${item.getDescription()}"></td>
+                        <td>
+                            <span th:each="tag, iter: ${itemTagMap.get(item.getKey())}">
+                                <span th:if="!${iter.last}" th:text="${tag.getTagName()} + ','"></span>
+                                <span th:if="${iter.last}" th:text="${tag.getTagName()}"></span>
+                            </span>
+                        </td>
+                        <td>
+                            <span th:if="${item.isForSale()}">Yes</span>
+                            <span th:if="${!item.isForSale()}">No</span>
+                        </td>
+                        <td th:text="${item.getPrice()}"></td>
+                        <td th:text="${item.getHolderId()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</html>

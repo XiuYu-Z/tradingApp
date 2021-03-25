@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<div class="container" layout:fragment="main-body">
+    <div class="page-header">
+        <h2 id="tables">System Configuration</h2>
+        <div class="alert alert-dismissible alert-success">
+            The following is a list of system rules you may wish to change. Any user that violates any of these rules will be alerted to admin who may decide to freeze these users. <br>
+        </div>
+        <div class="alert alert-dismissible alert-secondary">
+            <h5>Rules explanation</h5>
+            1. maxTransactionsPerWeek refers to the maximum number of transactions a user is allowed to initiate (sending meeting requests to others) or take part in (accepting a meeting request from others) in a week starting from this Monday. <br>
+            The date of the transaction is the date of its first meeting. <br>
+            <br>
+            2. maxMeetingEdits refers to the maximum number of times a user can edits a meeting request. <br>
+            <br>
+            3. maxIncompleteTransactions refers to the maximum number of incomplete transaction a user can have. <br>
+            Incomplete transaction refers to transaction which has passed and not confirmed by both users.
+        </div>
+        <div class="alert alert-dismissible alert-danger" th:if="${validationError}">
+            You have entered invalid values. Please enter non-negative integers only.
+        </div>
+    </div>
+    <div class="form-group">
+        <form th:action="@{/admin/config/update}" th:object="${configForm}" method="POST">
+            <div class="form-group" th:each="configItem : ${config}">
+                <label class="col-form-label" th:text="${configItem.key}"></label>
+                <input type="text" class="form-control" th:id="${configItem.key}"
+                       th:name=" 'configurations[' + ${configItem.key} + ']'" th:value="${configItem.value}">
+            </div>
+            <button style="margin-top: 40px" type="submit" class="btn btn-primary">Confirm</button>
+        </form>
+    </div>
+</div>
+
+
+</html>

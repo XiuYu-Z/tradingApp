@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<div class="container" layout:fragment="main-body">
+    <div class="row" style="margin-top: 40px">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h2 id="tables">User Freeze Suggestions</h2>
+                <div class="alert alert-dismissible alert-success">
+                    The following is a list of users that have been suggested for banning, recommended automatically by
+                    the system for violating one of the specified rules.<br>
+                    For example, if a user trades more than the allowed times per week, the user is recommended here for
+                    the admin to decide whether to freeze.
+                </div>
+                <div class="alert alert-dismissible alert-secondary">
+                    <h5>Tip: Don't see anything here?</h5>
+                    This is because the system parameters are too lenient.<br>
+                    Go to the config panel to reduce the thresholds for each rule.<br>
+                    For example: Reduce the max transactions allowed per week to zero in order to make every user who has initialised or taken part in a transaction to
+                    violate the rule.
+                </div>
+            </div>
+            <div class="bs-component">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">Username</th>
+                        <th scope="col">Freeze User</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user: ${freezeSuggestions}">
+                        <td th:text="${user.getName()}" style="vertical-align:middle"></td>
+                        <td style="vertical-align:middle">
+                            <form th:action="@{/admin/freeze/handle}" th:object="${freezeUserForm}" method="POST">
+                                <input type="hidden" class="form-control" name="userId" th:value="${user.getKey()}">
+                                <button type="submit" class="btn btn-primary">Freeze</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</html>

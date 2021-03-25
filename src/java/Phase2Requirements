@@ -1,0 +1,35 @@
+1. Mandatory extensions
+Give the admin user the ability to undo every action taken by regular users that can reasonably be undone.
+Have your program automatically suggest items to lend to a given user, if there is something that is both on one person's wish list and the other's lending list. In other words, when the user sees something they want to borrow, they can ask the program for a suggestion of what they could lend this user in return.
+Create a new type of account that allows a user to look at the various parts of the program without being able to trade or communicate with the admin user. This would be useful, if you ever wanted to set up the program as a demo for people to explore without creating an account and joining the trading community.
+Allow the admin user to adjust all of the threshold values, either from inside the program or by typing into a text file.
+Create another status for accounts besides frozen and unfrozen. For example, you can allow accounts to be taken down by the user for the duration of a vacation, when then will not be able to trade. You are only required to implement one additional account status. But if you want to implement four or more, it can count towards the next list.
+2. Extensions you can choose from:
+You will implement four of these, unless you implement a GUI. Please see the note below the list. Also, if your group has fewer than 7 members, please see Lindsey during an office hour or after lecture to discuss how many of the features in this section you are required to implement.
+
+Allow users to enter their home city when creating an account, so that the system will only show them other users in the same city.
+Monetize the system. In other words, give users the option to sell or trade items.
+Have the automated trade suggestion always return the most reasonable trade, even if it's not an exact match.
+Create a points system that allows users who trade most frequently, to get an extra chance to borrow without it counting towards being frozen, or some other "prize" that is equally complicated.
+Give your Admin user more functionality than Phase 1 and "undo" abilities.
+Expand the types of trades you can do. Possibilities include three-way trades, where A lends to B who lends to C who lends to A, or no-meeting trades where the users email each other media files.
+Include a number of different types of accounts or statuses for an account. Above, we talked about potentially allowing a user to temporarily make their account invisible to other users when they go away on vacation. Create at least three other ways to temporarily or permanently modify the capabilities of a given user's account. These could be applied by the user, the admin user, or both.
+Replace your text UI with a Graphic User Interface (GUI). See the note below.
+Note: Implementing a GUI with java.swing or java.awt counts as two features. Turning your program into an Android app counts as two or three features, depending on how much code you need to rewrite. We will not be teaching GUIs in this course, so you will have to refer to online tutorials and examples. Some sample code and related links will be posted to the Project Due Dates, Instructions, and Resources page soon.
+
+3. Create your own new features
+You are encouraged to invent new features that you would want to use in this program. The purpose of these invented features is to give you something to brag about during job interviews and make your program a bit different than everyone else's in the class.
+
+These features must be as complicated as the mandatory features, listed above. You can do this by implementing one big new feature or many smaller ones. If you are having difficulty thinking of new features, you can discuss this part with your TA, during office hours, or just implement more of the above features.
+
+4. What you will submit
+The code
+A README file with instructions for running your program and any other information we need to know to test its functionality.
+A list of features that you implemented for Phase 2, so we don't miss any.
+(optional) A video showing how your program works (and that it works). This is non-optional if we are required to install anything in order to run your program.
+A single UML diagram for the entire program or partial diagrams for different parts of your program.
+A list of design patterns that you used and why/how. Please include the names of all classes involved in the implementation of the pattern.
+You can also include reasons for not using certain design patterns, but that part is optional.
+(optional) A list of design decisions and explanations about how your code has improved since Phase 1.
+It is possible that you will receive an email from your TA during the 10 days immediately after the submission deadline with requests to meet with individual group members and/or the entire group. The email will include the questions that the TA will ask you, so you can prepare for the meeting. We will only email you if we need your help to assign a fair grade to each group member.
+The group mark is based on the code. Your individual mark will only be the same as the group mark if we can find evidence in the git logs that you contributed approximately equally to the coding of your project.

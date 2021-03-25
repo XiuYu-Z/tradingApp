@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns="http://www.w3.org/1999/html" layout:decorate="~{layout}">
+
+<div class="container" layout:fragment="main-body">
+    <div class="row" style="margin-top: 40px">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h2 id="tables">Items Waiting For Approval</h2>
+            </div>
+            <div class="bs-component">
+                <form th:action="@{/admin/items}" th:object="${itemApproveForm}" method="POST">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Item Name</th>
+                            <th scope="col">Item Description</th>
+                            <th scope="col">Tags</th>
+                            <th scope="col">Item Price</th>
+                            <th scope="col">Check Items to Approve</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="table-secondary" th:each="item: ${unapprovedItems}">
+                            <td th:text="${item.getName()}"></td>
+                            <td th:text="${item.getDescription()}"></td>
+                            <td>
+                                <span th:each="tag, iter: ${itemTagMap.get(item.getKey())}">
+                                    <span th:if="!${iter.last}" th:text="${tag.getTagName()} + ','"></span>
+                                    <span th:if="${iter.last}" th:text="${tag.getTagName()}"></span>
+                                </span>
+                            </td>
+                            <td th:if="${item.isForSale()}" th:text="${item.getPrice()}"></td>
+                            <td th:if="${!item.isForSale()}">Not For Sale</td>
+                            <td style="text-align:center">
+                                <input style="margin: auto" class="form-check-input" type="checkbox"
+                                       th:field="${itemApproveForm.items}" th:value="${item.getKey()}" checked="">
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn btn-primary">Approve</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

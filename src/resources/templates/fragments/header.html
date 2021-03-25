@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div class="bs-component" th:fragment="headerFragment">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="/">Group 83 Trading App</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item" th:if="${loggedIn == true}">
+                    <a class="nav-link" href="/trade/history">My Trades</a>
+                </li>
+                <li class="nav-item" th:if="${loggedIn == true}">
+                    <a class="nav-link" href="/items/all">My Items</a>
+                </li>
+                <li class="nav-item" th:if="${loggedIn==true}">
+                    <a class="nav-link" href="/wishlist/view">My Wishlist</a>
+                </li>
+                <li class="nav-item" th:if="${loggedIn == true}">
+                    <a class="nav-link" href="/meetings/view">My Meetings</a>
+                </li>
+                <li class="nav-item" th:if="${loggedIn==true}">
+                    <a class="nav-link" href="/browse">Browse Available Items</a>
+                </li>
+                <li class="nav-item" th:if="${loggedIn == true}">
+                    <a class="nav-link" href="/settings">My Account</a>
+                </li>
+                <li class="nav-item" th:if="${loggedIn == true && isAdmin == true}">
+                    <a class="nav-link" href="/admin">Admin Panel</a>
+                </li>
+
+                <!-- Login -->
+                <li class="nav-item" th:if="${loggedIn == false}">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item" th:if="${loggedIn == false}">
+                    <a class="nav-link" href="/register">Register</a>
+                </li>
+                <li class="nav-item" th:if="${loggedIn == true}">
+                    <a class="nav-link" href="/logout">Log Out</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/colour">Swap Themes</a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+    <div style="text-align: center; background: #e83e8c" th:if="${isAdmin == true}">
+        Welcome <span th:text="${username}"></span> to our trading app. You are logged in as an administrator. You have
+        extra privileges over a regular user.
+    </div>
+    <div style="text-align: center; background: #e83e8c" th:if="${isNormal == true}">
+        Good to see you <span th:text="${username}"></span>!
+    </div>
+    <div style="text-align: center; background: #e83e8c" th:if="${isVacation == true}">
+        Happy vacation! Your account is paused for trading.
+    </div>
+    <div style="text-align: center; background: #e83e8c" th:if="${isFrozen == true}">
+        As a result of your violation of trading rules, your account is frozen.
+    </div>
+    <div style="text-align: center; background: #e83e8c" th:if="${isDemo == true}">
+        Welcome to Demo mode. You can view the entire website but no actions you performed will be saved.
+    </div>
+    <div style="text-align: center; background: #e83e8c" th:if="${isRequestedUnfreeze == true}">
+        You have requested to be unfrozen. Please wait for an admin to approve.
+    </div>
+</div>
+</html>
+

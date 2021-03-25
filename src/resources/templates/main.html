@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+
+<div class="container" layout:fragment="main-body">
+    <div class="jumbotron">
+        <h1 class="display-3">Hello!</h1>
+        <p class="lead">
+            This page is for marking purposes.<br>
+            Here you can seed the platform with some dummy data, or delete all the data to start again.<br>
+            To start using the application, please register and login.
+        </p>
+        <div th:if="${seedSuccess != null && seedSuccess == true}" class="alert alert-dismissible alert-success">
+            Application successfully seeded
+        </div>
+        <div th:if="${alreadySeeded != null && alreadySeeded == true}" class="alert alert-dismissible alert-success">
+            Already Seeded
+        </div>
+        <div th:if="${deleteSuccess != null && deleteSuccess == true}" class="alert alert-dismissible alert-success">
+            Data deleted
+        </div>
+        <form  th:action="@{/data/seed}" method="POST">
+            <button class="btn btn-primary">Seed Data</button>
+        </form>
+        <form  th:action="@{/data/delete}" method="POST" style="margin-top: 40px;">
+            <button class="btn btn-primary btn-danger">Delete All Data</button>
+        </form>
+        <div style="margin-top:20px;">
+            <strong>WATCH OUT: </strong> Clicking this button will delete ALL data.<br>
+            You will have to reseed the data to start again.
+        </div>
+    </div>
+</div>
+
+</html>

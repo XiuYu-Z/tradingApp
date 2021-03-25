@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<div class="container" layout:fragment="main-body">
+    <div class="page-header">
+        <h2 id="tables">Admin Panel</h2>
+    </div>
+    <div class="form-group">
+        <div class="card border-primary mb-3">
+            <div class="card-header">Freeze Users</div>
+            <div class="card-body">
+                <p>Choose from a list of system-generated users, and decide whether they should be frozen.</p>
+                <a href="/admin/freeze/view" class="btn btn-primary">Freeze Users</a>
+            </div>
+        </div>
+        <div class="card border-primary mb-3">
+            <div class="card-header">View Unfreeze Users</div>
+            <div class="card-body">
+                <p>Requests from users to be unfrozen can be viewed here. Choose whether they should be unfrozen!</p>
+                <a href="/admin/unfreeze/view" class="btn btn-primary">View Unfreeze Requests</a>
+            </div>
+        </div>
+        <div class="card border-primary mb-3">
+            <div class="card-header">Approve Items</div>
+            <div class="card-body">
+                <p>Choose from a list of uploaded items by users of this app to approve.</p>
+                <a href="/admin/items" class="btn btn-primary">Approve Items</a>
+            </div>
+        </div>
+        <div class="card border-primary mb-3">
+            <div class="card-header">Make Administrator</div>
+            <div class="card-body">
+                <p>Choose from a list of regular users to make administrator.</p>
+                <a href="/admin/users" class="btn btn-primary">Make Admin</a>
+            </div>
+        </div>
+        <div class="card border-primary mb-3">
+            <div class="card-header">Create Demo Account</div>
+            <div class="card-body">
+                <p>Create a demo account that does not affect the rest of the application.</p>
+                <a href="/admin/demo" class="btn btn-primary">Create Demo Account</a>
+            </div>
+        </div>
+        <div class="card border-primary mb-3">
+            <div class="card-header">Change Config</div>
+            <div class="card-body">
+                <p>Change the system-wide configuration for this application.</p>
+                <a href="/admin/config/show" class="btn btn-primary">Change Config</a>
+            </div>
+        </div>
+        <div class="card border-primary mb-3">
+            <div class="card-header">Reporting</div>
+            <div class="card-body">
+                <p>View the reporting of the system.</p>
+                <a href="/admin/reporting" class="btn btn-primary">Reporting</a>
+            </div>
+        </div>
+        <div class="card border-primary mb-3">
+            <div class="card-header">Undo</div>
+            <div class="card-body">
+                <p>Undo the actions that you have done previously</p>
+                <a href="/admin/undo/all" class="btn btn-primary">Undo Actions</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</html>
